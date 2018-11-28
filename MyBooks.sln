@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBooks.Client", "MyBooks.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBooks.Api", "MyBooks.Api\MyBooks.Api.csproj", "{9F07BD30-311E-4C32-8848-83C5FF5F9523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBook.Bll", "MyBook.Bll\MyBook.Bll.csproj", "{673D2A65-7B85-42CE-B515-821A1B01539C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBooks.Bll", "MyBook.Bll\MyBooks.Bll.csproj", "{673D2A65-7B85-42CE-B515-821A1B01539C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

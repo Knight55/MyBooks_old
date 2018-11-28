@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyBook.Bll.Context;
+using Microsoft.Extensions.Logging;
+using MyBooks.Bll.Context;
+using MyBooks.Bll.Services;
+using MyBooks.Api.Mapping;
+using Newtonsoft.Json;
 
 namespace MyBooks.Api
 {
@@ -22,14 +27,20 @@ namespace MyBooks.Api
         {
             services.AddDbContext<MyBookContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options
+                    .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                    .UseLoggerFactory(new LoggerFactory().AddConsole());
             });
 
-            services.AddMvc();
+            services.AddSingleton(MapperConfig.Configure());
+            services.AddTransient<IBookService, BookService>();
+
+            services.AddMvc()
+                .AddJsonOptions(json => json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MyBookContext context)
         {
             if (env.IsDevelopment())
             {
@@ -50,11 +61,9 @@ namespace MyBooks.Api
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
+            
+            //context.RemoveAll();
+            context.Seed();
         }
     }
 }
