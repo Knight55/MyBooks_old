@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBook.Bll.Entities
 {
+    [Table("EDITION")]
     public class Edition
     {
         public int Id { get; set; }
