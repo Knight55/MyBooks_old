@@ -1,4 +1,4 @@
-﻿namespace MyBook.Bll.Entities
+﻿namespace MyBooks.Bll.Entities
 {
     public enum Format
     {

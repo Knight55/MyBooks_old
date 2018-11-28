@@ -1,5 +1,8 @@
-﻿namespace MyBook.Bll.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MyBooks.Bll.Entities
 {
+    [Table("WRITING")]
     public class Writing
     {
         public int Id { get; set; }

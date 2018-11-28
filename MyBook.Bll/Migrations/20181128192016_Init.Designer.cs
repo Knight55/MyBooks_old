@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyBook.Bll.Context;
-using MyBook.Bll.Entities;
+using MyBooks.Bll.Context;
+using MyBooks.Bll.Entities;
 
-namespace MyBook.Bll.Migrations
+namespace MyBooks.Bll.Migrations
 {
     [DbContext(typeof(MyBookContext))]
     [Migration("20181128192016_Init")]
