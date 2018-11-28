@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyBook.Bll.Entities;
+using MyBooks.Bll.Entities;
 
-namespace MyBook.Bll.Context
+namespace MyBooks.Bll.Context
 {
     public class MyBookContext : DbContext
     {
@@ -12,7 +13,8 @@ namespace MyBook.Bll.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //
+            optionsBuilder
+                .ConfigureWarnings(c => c.Throw(RelationalEventId.QueryClientEvaluationWarning));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
