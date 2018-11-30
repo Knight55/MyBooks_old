@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBooks.Bll.Context;
 using MyBooks.Bll.Entities;
@@ -10,9 +11,10 @@ using MyBooks.Bll.Entities;
 namespace MyBooks.Bll.Migrations
 {
     [DbContext(typeof(MyBookContext))]
-    partial class MyBookContextModelSnapshot : ModelSnapshot
+    [Migration("20181130142537_AddedRating")]
+    partial class AddedRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,14 +46,9 @@ namespace MyBooks.Bll.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue("Fantasy");
 
-                    b.Property<int>("RatingId");
-
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RatingId")
-                        .IsUnique();
 
                     b.ToTable("BOOK");
                 });
@@ -62,7 +59,7 @@ namespace MyBooks.Bll.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BookId");
+                    b.Property<int?>("BookId");
 
                     b.Property<string>("Format")
                         .IsRequired()
@@ -75,7 +72,7 @@ namespace MyBooks.Bll.Migrations
 
                     b.Property<DateTime>("PublishDate");
 
-                    b.Property<int>("PublisherId");
+                    b.Property<int?>("PublisherId");
 
                     b.HasKey("Id");
 
@@ -105,9 +102,14 @@ namespace MyBooks.Bll.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BookId");
+
                     b.Property<int>("Value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId")
+                        .IsUnique();
 
                     b.ToTable("RATING");
                 });
@@ -118,9 +120,9 @@ namespace MyBooks.Bll.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int?>("AuthorId");
 
-                    b.Property<int>("BookId");
+                    b.Property<int?>("BookId");
 
                     b.HasKey("Id");
 
@@ -131,24 +133,22 @@ namespace MyBooks.Bll.Migrations
                     b.ToTable("WRITING");
                 });
 
-            modelBuilder.Entity("MyBooks.Bll.Entities.Book", b =>
-                {
-                    b.HasOne("MyBooks.Bll.Entities.Rating", "Rating")
-                        .WithOne("Book")
-                        .HasForeignKey("MyBooks.Bll.Entities.Book", "RatingId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("MyBooks.Bll.Entities.Edition", b =>
                 {
                     b.HasOne("MyBooks.Bll.Entities.Book", "Book")
                         .WithMany("Editions")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BookId");
 
                     b.HasOne("MyBooks.Bll.Entities.Publisher", "Publisher")
                         .WithMany("Editions")
-                        .HasForeignKey("PublisherId")
+                        .HasForeignKey("PublisherId");
+                });
+
+            modelBuilder.Entity("MyBooks.Bll.Entities.Rating", b =>
+                {
+                    b.HasOne("MyBooks.Bll.Entities.Book", "Book")
+                        .WithOne("Rating")
+                        .HasForeignKey("MyBooks.Bll.Entities.Rating", "BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -156,13 +156,11 @@ namespace MyBooks.Bll.Migrations
                 {
                     b.HasOne("MyBooks.Bll.Entities.Author", "Author")
                         .WithMany("Writings")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("MyBooks.Bll.Entities.Book", "Book")
                         .WithMany("Writings")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BookId");
                 });
 #pragma warning restore 612, 618
         }
