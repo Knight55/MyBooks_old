@@ -7,10 +7,10 @@ namespace MyBooks.Client.Services
 {
     public interface IMyBookApiService
     {
-        [Get("/api/Book/{id}")]
+        [Get("/api/Books/{id}")]
         Task<Book> GetBookAsync(int id);
 
-        [Get("/api/Book")]
+        [Get("/api/Books")]
         Task<List<Book>> GetBooksAsync();
     }
 }
