@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.IO;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ using MyBooks.Bll.Context;
 using MyBooks.Bll.Services;
 using MyBooks.Api.Mapping;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyBooks.Api
 {
@@ -35,8 +38,24 @@ namespace MyBooks.Api
             services.AddSingleton(MapperConfig.Configure());
             services.AddTransient<IBookService, BookService>();
 
-            services.AddMvc()
+            services.AddMvc(o => o.MaxModelValidationErrors = 50)
                 .AddJsonOptions(json => json.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.AddSwaggerGen(o =>
+            {
+                o.SwaggerDoc("v1", new Info
+                {
+                    Title = "MyBooks API",
+                    Version = "v1",
+                    Contact = new Contact
+                    {
+                        Email = "toth.dani9204@gmail.com",
+                        Name = "Daniel Toth"
+                    }
+                });
+                o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "MyBooks.Api.xml"));
+                o.DescribeAllEnumsAsStrings();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +80,9 @@ namespace MyBooks.Api
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyBooks API v1"));
             
             //context.RemoveAll();
             context.Seed();
