@@ -12,6 +12,7 @@ namespace MyBooks.Api.Mapping
             {
                 //cfg.AllowNullCollections = true;
                 cfg.CreateMap<Book, Dtos.Book>()
+                    .ForMember(dto => dto.Genre, opt => opt.MapFrom(src => src.Genre.ToString()))
                     .ForMember(dto => dto.Authors, opt => opt.Ignore())
                     .AfterMap((b, dto, ctx) =>
                     {
@@ -22,6 +23,9 @@ namespace MyBooks.Api.Mapping
                 cfg.CreateMap<Author, Dtos.Author>()
                     .ForMember(dto => dto.Books, opt => opt.Ignore());
                 cfg.CreateMap<Dtos.Author, Author>();
+
+                cfg.CreateMap<Rating, Dtos.Rating>();
+                cfg.CreateMap<Dtos.Rating, Rating>();
 
                 // TODO: CreateMap for other entities and dtos as well
             });

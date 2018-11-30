@@ -7,10 +7,8 @@ namespace MyBooks.Bll.Entities
     [Table("AUTHOR")]
     public class Author
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required]
+        
         public string Name { get; set; }
 
         public ICollection<Writing> Writings { get; } = new List<Writing>();

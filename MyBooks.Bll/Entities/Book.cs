@@ -12,6 +12,9 @@ namespace MyBooks.Bll.Entities
 
         public Genre Genre { get; set; }
 
+        public int RatingId { get; set; }
+        public Rating Rating { get; set; }
+
         public ICollection<Writing> Writings { get; } = new List<Writing>();
 
         public ICollection<Edition> Editions { get; } = new List<Edition>();

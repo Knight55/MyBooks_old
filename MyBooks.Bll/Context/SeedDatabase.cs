@@ -37,9 +37,15 @@ namespace MyBooks.Bll.Context
                     PublishDate = new DateTime(2010, 8, 31),
                     NumberOfPages = 1007
                 };
+                var rating = new Rating
+                {
+                    Book = book,
+                    Value = 4
+                };
 
                 book.Writings.Add(writing);
                 author.Writings.Add(writing);
+                book.Rating = rating;
 
                 context.Books.Add(book);
                 context.Authors.Add(author);
