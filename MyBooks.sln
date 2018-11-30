@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBooks.Client.WPF", "MyBoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBooks.Api", "MyBooks.Api\MyBooks.Api.csproj", "{9F07BD30-311E-4C32-8848-83C5FF5F9523}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBooks.Bll", "MyBook.Bll\MyBooks.Bll.csproj", "{673D2A65-7B85-42CE-B515-821A1B01539C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBooks.Bll", "MyBooks.Bll\MyBooks.Bll.csproj", "{673D2A65-7B85-42CE-B515-821A1B01539C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBooks.Client", "MyBooks.Client\MyBooks.Client.csproj", "{41D56EC1-0D3B-4EDF-BBCF-5A7D4FAEE4BA}"
 EndProject
