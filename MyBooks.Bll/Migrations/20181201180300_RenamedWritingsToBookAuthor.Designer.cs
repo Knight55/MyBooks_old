@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBooks.Bll.Context;
 using MyBooks.Bll.Entities;
@@ -10,9 +11,10 @@ using MyBooks.Bll.Entities;
 namespace MyBooks.Bll.Migrations
 {
     [DbContext(typeof(MyBookContext))]
-    partial class MyBookContextModelSnapshot : ModelSnapshot
+    [Migration("20181201180300_RenamedWritingsToBookAuthor")]
+    partial class RenamedWritingsToBookAuthor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,14 +41,10 @@ namespace MyBooks.Bll.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CoverImagePath");
-
                     b.Property<string>("Genre")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue("Fantasy");
-
-                    b.Property<string>("Summary");
 
                     b.Property<string>("Title");
 
