@@ -1,4 +1,5 @@
-﻿using MyBooks.Client.Models;
+﻿using System;
+using MyBooks.Client.Models;
 using ReactiveUI;
 
 namespace MyBooks.Client.ViewModels
@@ -12,6 +13,9 @@ namespace MyBooks.Client.ViewModels
             _book = book;
         }
 
+        public Uri CoverUrl => new Uri(_book.CoverUrl);
         public string Title => _book.Title;
+        public string Summary => _book.Summary;
+        public string Genre => _book.Genre;
     }
 }

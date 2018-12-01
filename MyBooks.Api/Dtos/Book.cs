@@ -13,9 +13,11 @@ namespace MyBooks.Api.Dtos
         [Required(ErrorMessage = "Book title is required", AllowEmptyStrings = false)]
         public string Title { get; set; }
 
-        public string Genre { get; set; }
+        public string CoverUrl { get; set; }
 
-        public Rating Rating { get; set; }
+        public string Summary { get; set; }
+
+        public string Genre { get; set; }
 
         public List<Author> Authors { get; set; }
     }

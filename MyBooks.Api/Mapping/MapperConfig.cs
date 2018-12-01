@@ -14,9 +14,10 @@ namespace MyBooks.Api.Mapping
                 cfg.CreateMap<Book, Dtos.Book>()
                     .ForMember(dto => dto.Genre, opt => opt.MapFrom(src => src.Genre.ToString()))
                     .ForMember(dto => dto.Authors, opt => opt.Ignore())
+                    .ForMember(dto => dto.CoverUrl, opt => opt.MapFrom(src => $@"http://localhost:5000/covers/{src.CoverImagePath}"))
                     .AfterMap((b, dto, ctx) =>
                     {
-                        dto.Authors = b.Writings.Select(w => ctx.Mapper.Map<Dtos.Author>(w.Author)).ToList();
+                        dto.Authors = b.BookAuthors.Select(ba => ctx.Mapper.Map<Dtos.Author>(ba.Author)).ToList();
                     });
                 cfg.CreateMap<Dtos.Book, Book>();
 
