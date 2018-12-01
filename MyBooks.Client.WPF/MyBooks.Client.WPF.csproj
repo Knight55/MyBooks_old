@@ -168,7 +168,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MyBooks.Client\MyBooks.Client.csproj">
       <Project>{41d56ec1-0d3b-4edf-bbcf-5a7d4faee4ba}</Project>

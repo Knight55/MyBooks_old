@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Disposables;
+using System.Windows.Media.Imaging;
 using MyBooks.Client.ViewModels;
 using ReactiveUI;
 
@@ -17,7 +18,18 @@ namespace MyBooks.Client.WPF.Views
             {
                 this.OneWayBind(ViewModel,
                         viewModel => viewModel.Title,
-                        view => view.titleTextBlock.Text)
+                        view => view.titleRun.Text)
+                    .DisposeWith(disposableRegistration);
+
+                this.OneWayBind(ViewModel,
+                        viewModel => viewModel.Genre,
+                        view => view.genreRun.Text)
+                    .DisposeWith(disposableRegistration);
+
+                this.OneWayBind(ViewModel,
+                        viewModel => viewModel.CoverUrl,
+                        view => view.coverImage.Source,
+                        url => url == null ? null : new BitmapImage(url))
                     .DisposeWith(disposableRegistration);
             });
         }

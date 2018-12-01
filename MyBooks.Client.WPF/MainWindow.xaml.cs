@@ -25,7 +25,12 @@ namespace MyBooks.Client.WPF
             {
                 this.OneWayBind(ViewModel,
                         viewModel => viewModel.Results,
-                        view => view.bookListBox.ItemsSource)
+                        view => view.bookResultsListBox.ItemsSource)
+                    .DisposeWith(disposableRegistration);
+
+                this.Bind(ViewModel,
+                        viewModel => viewModel.SearchTerm,
+                        view => view.searchTextBox.Text)
                     .DisposeWith(disposableRegistration);
             });
         }

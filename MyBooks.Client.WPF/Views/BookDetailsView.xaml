@@ -7,8 +7,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid>
-        <TextBlock x:Name="titleTextBlock" TextWrapping="WrapWithOverflow" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image x:Name="coverImage" Margin="6" Width="64" Height="64"
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" TextWrapping="WrapWithOverflow"
                    Margin="6" VerticalAlignment="Center">
+            <Run x:Name="titleRun" FontSize="14" FontWeight="SemiBold"/>
+            <LineBreak />
+            <Run x:Name="genreRun" FontSize="12"/>
         </TextBlock>
     </Grid>
 </reactiveui:ReactiveUserControl>

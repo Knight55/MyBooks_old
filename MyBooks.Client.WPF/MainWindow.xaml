@@ -7,12 +7,44 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveui="http://reactiveui.net"
     xmlns:viewModels="clr-namespace:MyBooks.Client.ViewModels;assembly=MyBooks.Client"
+    xmlns:models="clr-namespace:MyBooks.Client.Models;assembly=MyBooks.Client"
     mc:Ignorable="d"
     Title="MyBooks" Height="450" Width="800">
 
     <Grid Margin="12">
-        <ListBox x:Name="bookListBox" Margin="5" HorizontalContentAlignment="Stretch"
-                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="16" FontWeight="SemiBold"
+                   VerticalAlignment="Center" Text="Search for: "/>
+        <TextBox Grid.Column="1" Grid.Row="0" Margin="6 0 0 0" x:Name="searchTextBox" />
+        <ListBox x:Name="bookResultsListBox" Margin="0, 6, 0, 0"
+                 HorizontalContentAlignment="Stretch"
+                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Book">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding CoverUrl}" Margin="6" Width="64" Height="64"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" TextWrapping="WrapWithOverflow"
+                                   Margin="6" VerticalAlignment="Center">
+                            <Run Text="{Binding Title}" FontSize="14" FontWeight="SemiBold"/>
+                            <LineBreak />
+                            <Run Text="{Binding Genre}" FontSize="12"/>
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </reactiveui:ReactiveWindow>
