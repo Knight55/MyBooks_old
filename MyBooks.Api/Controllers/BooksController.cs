@@ -38,6 +38,13 @@ namespace MyBooks.Api.Controllers
         {
             return Ok(_mapper.Map<Book>(_bookService.GetBook(id)));
         }
+
+        [HttpGet("Search/{searchTerm}")]
+        [ProducesResponseType(typeof(List<Book>), (int)HttpStatusCode.OK)]
+        public IActionResult Search(string searchTerm)
+        {
+            return Ok(_mapper.Map<List<Book>>(_bookService.SearchBooks(searchTerm)));
+        }
         
         /// <summary>
         /// Insert the given book.

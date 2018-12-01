@@ -12,5 +12,8 @@ namespace MyBooks.Client.Services
 
         [Get("/api/Books")]
         Task<List<Book>> GetBooksAsync();
+
+        [Get("/api/Books/Search/{searchTerm}")]
+        Task<List<Book>> SearchBooksAsync(string searchTerm);
     }
 }

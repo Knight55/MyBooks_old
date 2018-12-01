@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using DynamicData.Binding;
+using MyBooks.Client.Models;
 using MyBooks.Client.Services;
 using ReactiveUI;
 using Refit;
@@ -14,40 +16,51 @@ namespace MyBooks.Client.ViewModels
 {
     public class AppViewModel : ReactiveObject
     {
-        private readonly ObservableAsPropertyHelper<IEnumerable<BookDetailsViewModel>> _results;
-        public IEnumerable<BookDetailsViewModel> Results { get; }
+        private string _searchTerm;
+        public string SearchTerm
+        {
+            get => _searchTerm;
+            set => this.RaiseAndSetIfChanged(ref _searchTerm, value);
+        }
+
+        private readonly ObservableAsPropertyHelper<IEnumerable<Book>> _results;
+        public IEnumerable<Book> Results => _results.Value;
 
         private readonly ObservableAsPropertyHelper<bool> _isAvailable;
         public bool IsAvailable => _isAvailable.Value;
 
-        public int Temp { get; set; }
-
         public AppViewModel()
         {
-            _isAvailable = this
-                .WhenAnyValue(x => x.Results)
-                .Select(results => results != null)
-                .ToProperty(this, x => x.IsAvailable);
-
             // TODO: Modify this
             _results = this
-                .WhenAnyValue(x => x.Temp)
-                .Do(x => Debug.WriteLine($"New random number: {x}"))
+                .WhenAnyValue(x => x.SearchTerm)
+                .Throttle(TimeSpan.FromMilliseconds(500))
+                .Select(term => term?.Trim())
+                .DistinctUntilChanged()
                 .SelectMany(GetBooks)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .ToProperty(this, x => x.Results);
 
-            var timer = new Timer(2000);
-            var random = new Random();
-            timer.Elapsed += (sender, args) => Temp = random.Next(1, 10);
-            timer.Start();
+            _isAvailable = this
+                .WhenAnyValue(x => x.Results)
+                .Select(results => results != null)
+                .ToProperty(this, x => x.IsAvailable);
         }
 
-        private async Task<IEnumerable<BookDetailsViewModel>> GetBooks(int randomNumber)
+        private async Task<IEnumerable<Book>> GetBooks(string searchTerm, CancellationToken token)
         {
             var myBooksApiService = RestService.For<IMyBookApiService>("http://localhost:5000");
-            var books = await myBooksApiService.GetBooksAsync();
-            return books.Select(b => new BookDetailsViewModel(b));
+
+            List<Book> books;
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                books = await myBooksApiService.GetBooksAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                books = await myBooksApiService.SearchBooksAsync(searchTerm).ConfigureAwait(false);
+            }
+            return books;
         }
     }
 }

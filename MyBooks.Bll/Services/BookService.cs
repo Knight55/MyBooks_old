@@ -22,7 +22,7 @@ namespace MyBooks.Bll.Services
             return _context.Books
                 .Include(b => b.Editions)
                 .ThenInclude(e => e.Publisher)
-                .Include(b => b.Writings)
+                .Include(b => b.BookAuthors)
                 .ThenInclude(w => w.Author)
                 .SingleOrDefault(b => b.Id == bookId) ?? throw new EntityNotFoundException("Book not found.");
         }
@@ -32,7 +32,20 @@ namespace MyBooks.Bll.Services
             var books = _context.Books
                 .Include(b => b.Editions)
                 .ThenInclude(e => e.Publisher)
-                .Include(b => b.Writings)
+                .Include(b => b.BookAuthors)
+                .ThenInclude(w => w.Author)
+                .ToList();
+
+            return books;
+        }
+
+        public IEnumerable<Book> SearchBooks(string searchTerm)
+        {
+            var books = _context.Books
+                .Where(b => b.Title.Contains(searchTerm))
+                .Include(b => b.Editions)
+                .ThenInclude(e => e.Publisher)
+                .Include(b => b.BookAuthors)
                 .ThenInclude(w => w.Author)
                 .ToList();
 
