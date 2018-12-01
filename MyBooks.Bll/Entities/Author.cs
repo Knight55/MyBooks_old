@@ -11,6 +11,6 @@ namespace MyBooks.Bll.Entities
         
         public string Name { get; set; }
 
-        public ICollection<Writing> Writings { get; } = new List<Writing>();
+        public ICollection<BookAuthor> BookAuthors { get; } = new List<BookAuthor>();
     }
 }

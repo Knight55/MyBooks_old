@@ -38,5 +38,6 @@ namespace MyBooks.Bll.Context
         public DbSet<Author> Authors { get; set; }
         public DbSet<Edition> Editions { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
     }
 }

@@ -10,12 +10,15 @@ namespace MyBooks.Bll.Entities
 
         public string Title { get; set; }
 
-        public Genre Genre { get; set; }
+        public string CoverImagePath { get; set; }
 
-        public int RatingId { get; set; }
+        public string Summary { get; set; }
+
+        public Genre Genre { get; set; }
+        
         public Rating Rating { get; set; }
 
-        public ICollection<Writing> Writings { get; } = new List<Writing>();
+        public ICollection<BookAuthor> BookAuthors { get; } = new List<BookAuthor>();
 
         public ICollection<Edition> Editions { get; } = new List<Edition>();
     }
