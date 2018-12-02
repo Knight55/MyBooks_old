@@ -16,20 +16,20 @@ namespace MyBooks.Client.WPF.Views
 
             this.WhenActivated(disposableRegistration =>
             {
-                this.OneWayBind(ViewModel,
-                        viewModel => viewModel.Title,
-                        view => view.titleRun.Text)
+                this.OneWayBind(ViewModel, vm => vm.Title, v => v.titleRun.Text)
                     .DisposeWith(disposableRegistration);
 
-                this.OneWayBind(ViewModel,
-                        viewModel => viewModel.Genre,
-                        view => view.genreRun.Text)
+                this.OneWayBind(ViewModel, vm => vm.Genre, v => v.genreRun.Text)
                     .DisposeWith(disposableRegistration);
 
-                this.OneWayBind(ViewModel,
-                        viewModel => viewModel.CoverUrl,
-                        view => view.coverImage.Source,
+                this.OneWayBind(ViewModel, vm => vm.CoverUrl, v => v.coverImage.Source,
                         url => url == null ? null : new BitmapImage(url))
+                    .DisposeWith(disposableRegistration);
+
+                this.OneWayBind(ViewModel, vm => vm.Summary, v => v.summaryTextBox.Text)
+                    .DisposeWith(disposableRegistration);
+
+                this.BindCommand(ViewModel, vm => vm.GoBack, v => v.backButton)
                     .DisposeWith(disposableRegistration);
             });
         }

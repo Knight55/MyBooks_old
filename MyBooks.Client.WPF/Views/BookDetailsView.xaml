@@ -11,13 +11,26 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image x:Name="coverImage" Margin="6" Width="64" Height="64"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image x:Name="coverImage" Margin="6" Width="256" Height="256"
                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" TextWrapping="WrapWithOverflow"
+        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="WrapWithOverflow"
                    Margin="6" VerticalAlignment="Center">
             <Run x:Name="titleRun" FontSize="14" FontWeight="SemiBold"/>
             <LineBreak />
             <Run x:Name="genreRun" FontSize="12"/>
         </TextBlock>
+        <Button x:Name="backButton" Grid.Row="1" Grid.Column="0"
+                Content="Back" VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <TextBox x:Name="summaryTextBox" TextWrapping="Wrap"
+                     IsReadOnly="True"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </ScrollViewer>
     </Grid>
 </reactiveui:ReactiveUserControl>

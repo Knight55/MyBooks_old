@@ -14,23 +14,9 @@ namespace MyBooks.Client.WPF
             InitializeComponent();
             ViewModel = new AppViewModel();
 
-            // We create our bindings here. These are the code behind bindings which allow 
-            // type safety. The bindings will only become active when the Window is being shown.
-            // We register our subscription in our disposableRegistration, this will cause 
-            // the binding subscription to become inactive when the Window is closed.
-            // The disposableRegistration is a CompositeDisposable which is a container of 
-            // other Disposables. We use the DisposeWith() extension method which simply adds 
-            // the subscription disposable to the CompositeDisposable.
             this.WhenActivated(disposableRegistration =>
             {
-                this.OneWayBind(ViewModel,
-                        viewModel => viewModel.Results,
-                        view => view.bookResultsListBox.ItemsSource)
-                    .DisposeWith(disposableRegistration);
-
-                this.Bind(ViewModel,
-                        viewModel => viewModel.SearchTerm,
-                        view => view.searchTextBox.Text)
+                this.Bind(ViewModel, vm => vm.Router, v => v.viewHost.Router)
                     .DisposeWith(disposableRegistration);
             });
         }
