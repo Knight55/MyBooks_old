@@ -62,7 +62,7 @@
             </ScrollViewer>
         </StackPanel>
         <Button x:Name="backButton" Grid.Row="1" Grid.Column="0"
-                Content="Back" VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"/>
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                FontFamily="Marlett" FontSize="20" Content="3"/>
     </Grid>
 </rxui:ReactiveUserControl>
