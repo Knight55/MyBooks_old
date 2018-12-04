@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
@@ -9,6 +8,7 @@ using MyBooks.Client.Models;
 using MyBooks.Client.Services;
 using ReactiveUI;
 using Refit;
+using Splat;
 
 namespace MyBooks.Client.ViewModels
 {
@@ -16,6 +16,7 @@ namespace MyBooks.Client.ViewModels
     {
         public string UrlPathSegment => "bookSearch";
         public IScreen HostScreen { get; }
+        private readonly IMyBookApiService _myBookApiService;
 
         private string _searchTerm;
         public string SearchTerm
@@ -32,13 +33,16 @@ namespace MyBooks.Client.ViewModels
 
         public ReactiveCommand<Book, Unit> GoToBookDetails { get; }
 
-        public BookSearchViewModel(IScreen hostScreen)
+        public BookSearchViewModel(IScreen hostScreen, IMyBookApiService myBookApiService)
         {
             HostScreen = hostScreen;
+            _myBookApiService = myBookApiService;
 
             GoToBookDetails = ReactiveCommand.Create<Book>(b =>
             {
-                HostScreen.Router.Navigate.Execute(new BookDetailsViewModel(HostScreen, b)).Subscribe();
+                var bookDetailsViewModel = Locator.Current.GetService<BookDetailsViewModel>();
+                bookDetailsViewModel.Book = b;
+                HostScreen.Router.Navigate.Execute(bookDetailsViewModel).Subscribe();
             });
 
             _results = this
@@ -65,16 +69,14 @@ namespace MyBooks.Client.ViewModels
         /// <returns></returns>
         private async Task<IEnumerable<Book>> GetBooks(string searchTerm, CancellationToken token)
         {
-            var myBooksApiService = RestService.For<IMyBookApiService>("http://localhost:5000");
-
             List<Book> books;
             if (string.IsNullOrEmpty(searchTerm))
             {
-                books = await myBooksApiService.GetBooksAsync().ConfigureAwait(false);
+                books = await _myBookApiService.GetBooksAsync().ConfigureAwait(false);
             }
             else
             {
-                books = await myBooksApiService.SearchBooksAsync(searchTerm).ConfigureAwait(false);
+                books = await _myBookApiService.SearchBooksAsync(searchTerm).ConfigureAwait(false);
             }
             return books;
         }

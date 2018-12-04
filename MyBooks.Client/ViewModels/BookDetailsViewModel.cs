@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reactive;
 using MyBooks.Client.Models;
 using ReactiveUI;
@@ -12,21 +13,22 @@ namespace MyBooks.Client.ViewModels
         public IScreen HostScreen { get; }
 
         public ReactiveCommand<Unit, Unit> GoBack { get; }
+        public ReactiveCommand<Unit, Unit> OpenGoodreadsUrl { get; }
 
-        private readonly Book _book;
-        public Uri CoverUrl => new Uri(_book.CoverUrl);
-        public string Title => _book.Title;
-        public string Summary => _book.Summary ?? "No summary";
-        public string Genre => _book.Genre;
+        public Book Book { get; set; }
 
-        public BookDetailsViewModel(IScreen hostScreen, Book book)
+        public Uri CoverUrl => new Uri(Book.CoverUrl);
+        public string Title => Book.Title;
+        public string Summary => Book.Summary ?? "No summary";
+        public string Genre => Book.Genre;
+        public string Authors => string.Join(", ", Book.Authors.Select(a => a.Name));
+        public string Rating => Book.Rating > 0.0 ? $"{Math.Round(Book.Rating, 2)}" : "Not yet rated.";
+
+        public BookDetailsViewModel(IScreen hostScreen)
         {
             HostScreen = hostScreen;
-            _book = book;
-            GoBack = ReactiveCommand.Create(() =>
-            {
-                HostScreen.Router.NavigateBack.Execute();
-            });
+            GoBack = ReactiveCommand.Create(() => { HostScreen.Router.NavigateBack.Execute(); });
+            OpenGoodreadsUrl = ReactiveCommand.Create(() => { Process.Start(Book.GoodreadsUrl); });
         }
     }
 }
