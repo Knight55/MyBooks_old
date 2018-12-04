@@ -15,22 +15,54 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Image x:Name="coverImage" Margin="6" Width="256" Height="256"
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="WrapWithOverflow"
-                   Margin="6" VerticalAlignment="Center">
-            <Run x:Name="titleRun" FontSize="14" FontWeight="SemiBold"/>
-            <LineBreak />
-            <Run x:Name="genreRun" FontSize="12"/>
-        </TextBlock>
+        
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+                            Storyboard.TargetName="coverImage"
+                            Storyboard.TargetProperty="Opacity"
+                            From="0.0" To="1.0" Duration="0:0:3"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
+        <StackPanel Orientation="Vertical">
+            <Image x:Name="coverImage" Margin="6" Width="400" Height="400"
+                   HorizontalAlignment="Center" VerticalAlignment="Center">
+            </Image>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.RowSpan="2"
+                    Grid.Row="0" Grid.Column="1">
+            <TextBlock TextWrapping="WrapWithOverflow"
+                       Margin="6" VerticalAlignment="Center">
+                <Run x:Name="titleRun" FontSize="18" FontWeight="SemiBold"/>
+                <LineBreak />
+                <Run FontSize="14" FontWeight="SemiBold" Text="Genre: "/>
+                <Run x:Name="genreRun" FontSize="14"/>
+                <LineBreak />
+                <Run FontSize="14" FontWeight="SemiBold" Text="Authors: "/>
+                <Run x:Name="authorsRun" FontSize="14"/>
+                <LineBreak />
+                <Run FontSize="14" FontWeight="SemiBold" Text="Rating: "/>
+                <Run x:Name="ratingRun" FontSize="14"/>
+                <LineBreak />
+                <Hyperlink x:Name="goodreadsLink">Open in Goodreads</Hyperlink>
+                <LineBreak />
+                <LineBreak />
+                <Run FontSize="14" FontWeight="SemiBold" Text="Summary"/>
+            </TextBlock>
+            <ScrollViewer Margin="6">
+                <TextBox x:Name="summaryTextBox" TextWrapping="Wrap"
+                         IsReadOnly="True"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            </ScrollViewer>
+        </StackPanel>
         <Button x:Name="backButton" Grid.Row="1" Grid.Column="0"
                 Content="Back" VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"/>
-        <ScrollViewer Grid.Row="1" Grid.Column="1">
-            <TextBox x:Name="summaryTextBox" TextWrapping="Wrap"
-                     IsReadOnly="True"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-        </ScrollViewer>
     </Grid>
 </rxui:ReactiveUserControl>
