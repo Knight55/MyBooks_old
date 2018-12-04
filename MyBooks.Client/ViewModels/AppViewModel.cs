@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using DynamicData.Binding;
-using MyBooks.Client.Models;
-using MyBooks.Client.Services;
+﻿using MyBooks.Client.Services;
 using ReactiveUI;
-using Refit;
+using Splat;
 
 namespace MyBooks.Client.ViewModels
 {
-    public class AppViewModel : ReactiveObject, IScreen
+    public class AppViewModel : ReactiveObject, IRoutableViewModel
     {
-        public RoutingState Router { get; }
+        public string UrlPathSegment => "appView";
+        public IScreen HostScreen { get; }
 
-        public AppViewModel()
+        public AppViewModel(IScreen hostScreen)
         {
-            Router = new RoutingState();
-            Router.Navigate.Execute(new BookSearchViewModel(this));
+            HostScreen = hostScreen;
+            HostScreen.Router.Navigate.Execute(Locator.Current.GetService<BookSearchViewModel>());
         }
     }
 }
