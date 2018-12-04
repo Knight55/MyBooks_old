@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Disposables;
+using System.Windows;
 using MyBooks.Client.ViewModels;
 using ReactiveUI;
 using Splat;
@@ -20,6 +21,16 @@ namespace MyBooks.Client.WPF
                 this.Bind(ViewModel, vm => vm.HostScreen.Router, v => v.viewHost.Router)
                     .DisposeWith(disposableRegistration);
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnExit(object sender, RoutedEventArgs args)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
