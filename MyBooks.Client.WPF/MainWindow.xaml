@@ -8,11 +8,18 @@
     xmlns:rxui="http://reactiveui.net"
     xmlns:viewModels="clr-namespace:MyBooks.Client.ViewModels;assembly=MyBooks.Client"
     mc:Ignorable="d"
-    Title="MyBooks" Height="450" Width="800">
+    Title="MyBooks" MinHeight="720" MinWidth="1280">
 
-    <rxui:RoutedViewHost
-        x:Name="viewHost"
-        HorizontalContentAlignment="Stretch"
-        VerticalContentAlignment="Stretch">
-    </rxui:RoutedViewHost>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <rxui:RoutedViewHost
+            x:Name="viewHost"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+        </rxui:RoutedViewHost>
+    </DockPanel>
 </rxui:ReactiveWindow>
