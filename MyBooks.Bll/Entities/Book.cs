@@ -18,6 +18,10 @@ namespace MyBooks.Bll.Entities
         
         public Rating Rating { get; set; }
 
+        public string GoodreadsId { get; set; }
+
+        public int MyProperty { get; set; }
+
         public ICollection<BookAuthor> BookAuthors { get; } = new List<BookAuthor>();
 
         public ICollection<Edition> Editions { get; } = new List<Edition>();

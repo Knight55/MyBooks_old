@@ -24,6 +24,7 @@ namespace MyBooks.Bll.Services
                 .ThenInclude(e => e.Publisher)
                 .Include(b => b.BookAuthors)
                 .ThenInclude(w => w.Author)
+                .Include(b => b.Rating)
                 .SingleOrDefault(b => b.Id == bookId) ?? throw new EntityNotFoundException("Book not found.");
         }
 
@@ -34,6 +35,7 @@ namespace MyBooks.Bll.Services
                 .ThenInclude(e => e.Publisher)
                 .Include(b => b.BookAuthors)
                 .ThenInclude(w => w.Author)
+                .Include(b => b.Rating)
                 .ToList();
 
             return books;
@@ -47,6 +49,7 @@ namespace MyBooks.Bll.Services
                 .ThenInclude(e => e.Publisher)
                 .Include(b => b.BookAuthors)
                 .ThenInclude(w => w.Author)
+                .Include(b => b.Rating)
                 .ToList();
 
             return books;

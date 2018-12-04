@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBooks.Bll.Context;
 using MyBooks.Bll.Entities;
@@ -10,9 +11,10 @@ using MyBooks.Bll.Entities;
 namespace MyBooks.Bll.Migrations
 {
     [DbContext(typeof(MyBookContext))]
-    partial class MyBookContextModelSnapshot : ModelSnapshot
+    [Migration("20181202162243_AddedGoodreadsId")]
+    partial class AddedGoodreadsId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -14,6 +14,10 @@ namespace MyBooks.Client.Models
 
         public string Genre { get; set; }
 
+        public double Rating { get; set; }
+
+        public string GoodreadsUrl { get; set; }
+
         public List<Author> Authors { get; set; } = new List<Author>();
     }
 }
